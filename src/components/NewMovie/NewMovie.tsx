@@ -25,6 +25,15 @@ export const NewMovie = ({ onAdd }: Props) => {
   const hasAllRequiredValues =
     !title.trim() || !imgUrl.trim() || !imdbUrl.trim() || !imdbId.trim();
 
+  const validateUrl = (value: string): string => {
+    // eslint-disable-next-line prettier/prettier, max-len
+    const pattern = /^(https?:\/\/)[\w.-]+\.[a-z]{2,}(\/\S*)?$/i;
+
+    return pattern.test(value)
+      ? ''
+      : 'Please enter a valid URL starting with http:// or https://';
+  };
+
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
 
@@ -61,6 +70,7 @@ export const NewMovie = ({ onAdd }: Props) => {
         label="Image URL"
         value={imgUrl}
         onChange={setImgUrl}
+        extraValidation={validateUrl}
         required={true}
       />
 
@@ -69,6 +79,7 @@ export const NewMovie = ({ onAdd }: Props) => {
         label="Imdb URL"
         value={imdbUrl}
         onChange={setImdbUrl}
+        extraValidation={validateUrl}
         required={true}
       />
 
